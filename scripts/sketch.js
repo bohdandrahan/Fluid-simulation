@@ -1,9 +1,10 @@
-let N = 256
+let N = 100
 let dt = 0.1;
 let diffusion = 0;
 let viscosity = 0;
 let fluid;
 let iter = 1;
+let scale = 10
 
 function IX(x, y) {
 	x = constrain(x, 0, N - 1)
@@ -12,16 +13,16 @@ function IX(x, y) {
 }
 
 function setup() {
-	createCanvas(N, N)
+	createCanvas(N * scale, N * scale)
 	fluid = new Fluid(dt, diffusion, viscosity);
 
 }
 
 function mouseDragged() {
-	fluid.addDye(mouseX, mouseY, 100)
-	let amtX = mouseX - pmouseX;
-	let amtY = mouseY - pmouseY;
-	fluid.addVelocity(mouseX, mouseY, amtX, amtY)
+	fluid.addDye(floor(mouseX / scale), floor(mouseY / scale), 100)
+	let amtX = random(0, 1);
+	let amtY = random(0, 1);
+	fluid.addVelocity(floor(mouseX / scale), floor(mouseY / scale), amtX, amtY)
 
 }
 

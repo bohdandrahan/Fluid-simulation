@@ -33,7 +33,6 @@ class Fluid {
 		}
 	};
 	addDye(x, y, amount) {
-		console.log('adding')
 		let index = IX(x, y);
 		this.density[index] += amount;
 	}
@@ -67,9 +66,11 @@ class Fluid {
 		for (let i = 0; i < N; i++) {
 			for (let j = 0; j < N; j++) {
 				let d = this.density[IX(i, j)]
+				let x = i * scale;
+				let y = j * scale;
 				fill(d)
-				noStroke()
-				rect(i, j, 1, 1)
+				stroke(100, 0, 0)
+				rect(x, y, scale, scale)
 			}
 		}
 	}
@@ -183,13 +184,13 @@ function advect(b, d, d0, velocX, velocY, dt) {
 function set_bnd(b, x, N) {
 
 	for (let i = 1; i < N - 1; i++) {
-		x[IX(i, 0)] = b == 2 ? -x[IX(i, 1)] : x[IX(i, 1)];
-		x[IX(i, N - 1)] = b == 2 ? -x[IX(i, N - 2)] : x[IX(i, N - 2)];
+		x[IX(i, 0)] = b === 2 ? -x[IX(i, 1)] : x[IX(i, 1)];
+		x[IX(i, N - 1)] = b === 2 ? -x[IX(i, N - 2)] : x[IX(i, N - 2)];
 	}
 
 	for (let j = 1; j < N - 1; j++) {
-		x[IX(0, j)] = b == 1 ? -x[IX(1, j)] : x[IX(1, j)];
-		x[IX(N - 1, j)] = b == 1 ? -x[IX(N - 2, j)] : x[IX(N - 2, j)];
+		x[IX(0, j)] = b === 1 ? -x[IX(1, j)] : x[IX(1, j)];
+		x[IX(N - 1, j)] = b === 1 ? -x[IX(N - 2, j)] : x[IX(N - 2, j)];
 	}
 	x[IX(0, 0)] = 0.5 * (x[IX(1, 0)] + x[IX(0, 1)]);
 	x[IX(0, N - 1)] = 0.5 * (x[IX(1, N - 1)] + x[IX(0, N - 2)]);
